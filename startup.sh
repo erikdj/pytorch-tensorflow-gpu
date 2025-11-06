@@ -55,4 +55,26 @@ if torch.cuda.is_available():
             break
 " 2>/dev/null
 
+# Start Jupyter in the background
+jupyter notebook \
+    --ip=0.0.0.0 \
+    --port=8888 \
+    --no-browser \
+    --NotebookApp.token='' \
+    --NotebookApp.password='' \
+    --allow-root \
+    > /var/log/jupyter.log 2>&1 &
+
+# Save Jupyter PID
+JUPYTER_PID=$!
+echo "Jupyter started (PID: $JUPYTER_PID)"
+echo "Access at: http://localhost:8888"
+echo "Logs: /var/log/jupyter.log"
+echo ""
+echo "============================================"
+echo "Workspace: /workspace"
+echo "Test GPU:  python /opt/test_gpu.py"
+echo "============================================"
+echo ""
+
 exec /bin/bash
